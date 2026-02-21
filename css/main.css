@@ -1,0 +1,88 @@
+/* État caché : on fait disparaître la modale */
+.modal-cachee {
+    display: none;
+}
+
+/* État visible : prend tout l'écran avec un fond noir transparent */
+.modal-visible {
+    display: flex;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.8);
+    justify-content: center;
+    /* Centre horizontalement */
+    align-items: center;
+    /* Centre verticalement */
+}
+
+/* La petite boîte blanche au milieu */
+.modal-contenu {
+    background: white;
+    color: black;
+    padding: 30px;
+    border-radius: 15px;
+    text-align: center;
+    max-width: 80%;
+    /* Pour ne pas toucher les bords sur téléphone */
+    position: relative;
+    /* NOUVEAU */
+}
+
+/* Un peu de style pour séparer la référence */
+#referenceVerset {
+    font-style: italic;
+    font-weight: bold;
+    margin-top: 15px;
+}
+
+/* Le style de la croix en haut à droite */
+.fermer-croix {
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    font-size: 28px;
+    font-weight: bold;
+    color: #ff0000;
+    cursor: pointer;
+}
+
+/* Un petit style propre pour le bouton Copier */
+.btn-copier {
+    margin-top: 20px;
+    padding: 10px 20px;
+    background-color: #333;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+/* Le conteneur des boutons en bas de la modale */
+.modal-actions {
+    display: flex; /* Met les éléments côte à côte */
+    justify-content: space-between; /* Espace équitablement */
+    margin-top: 25px;
+    gap: 10px; /* Espace de 10px entre les deux boutons */
+}
+
+/* Le style commun pour le bouton Copier et Relancer */
+.btn-action {
+    flex: 1; /* Oblige les boutons à avoir la même largeur */
+    padding: 12px;
+    background-color: #333;
+    color: white;
+    border: rgb(195, 145, 195);
+    border-radius: 10px;
+    font-size: 15px;
+    cursor: pointer;
+}
+
+/* Un petit effet quand on clique dessus (optionnel mais sympa) */
+.btn-action:active {
+    background-color: #bd99de;
+    transform: scale(0.95);
+}

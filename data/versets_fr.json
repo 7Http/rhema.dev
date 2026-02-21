@@ -1,9 +1,20 @@
 {
-    "amour": [ 
-        "Car Dieu a tant aimé le monde... - Jean 3:16",
-        "Que tout ce que vous faites se fasse avec amour. - 1 Cor 16:14"
+    "amour": [
+        {
+            "texte": "Car Dieu a tant aimé le monde",
+            "reference": "Jean 3:16"
+        },
+        {
+            "texte": "Que tout ce que vous faites se fasse avec amour.",
+            "reference": "1 Corinthiens 16:14"
+        }
     ],
+
+
     "peur": [
-        "Ne crains rien, car je suis avec toi. - Ésaïe 41:10"
+        {
+            "texte": "Ne crains rien, car je suis avec toi.",
+            "reference": "Ésaïe 41:10"
+        }
     ]
 }

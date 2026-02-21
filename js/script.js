@@ -1,43 +1,73 @@
-// 1. On crée une boîte vide pour stocker nos versets une fois chargés
 let baseDeDonnees = {};
+// NOUVEAU : La mémoire de la modale
+let categorieActuelle = ""; 
 
-// 2. Fonction pour aller lire le fichier JSON au démarrage
 async function chargerVersets() {
-    // "fetch" va chercher le fichier. "await" dit au code d'attendre qu'il ait fini.
     const reponse = await fetch('data/versets_fr.json');
     baseDeDonnees = await reponse.json();
-    console.log("Les versets sont bien chargés dans le système !");
+    console.log("Les versets sont bien chargés !");
 }
 
-// On lance le chargement tout de suite
 chargerVersets();
 
-// 3. On sélectionne TOUS les boutons qui ont la classe 'btn-emotion'
+const fenetreModal = document.getElementById('fenetreModal');
+const affichageTexte = document.getElementById('texteVerset');
+const affichageReference = document.getElementById('referenceVerset');
+const boutonFermer = document.getElementById('btnFermerCroix');
+const boutonCopier = document.getElementById('btnCopier');
+// NOUVEAU : On attrape le bouton Relancer
+const boutonRelancer = document.getElementById('btnRelancer');
+
 const tousLesBoutons = document.querySelectorAll('.btn-emotion');
 
-// 4. On donne un ordre à chaque bouton
+// --- NOUVEAU : La fonction réutilisable ---
+// Au lieu de réécrire le code, on l'isole ici. 
+// On lui donne une catégorie (ex: "amour"), et elle fait tout le travail.
+function afficherUnVerset(categorie) {
+    if (baseDeDonnees[categorie]) {
+        const listeVersets = baseDeDonnees[categorie];
+        const indexAleatoire = Math.floor(Math.random() * listeVersets.length);
+        const versetChoisi = listeVersets[indexAleatoire];
+        
+        // On met à jour le texte
+        affichageTexte.textContent = `"${versetChoisi.texte}"`;
+        affichageReference.textContent = `- ${versetChoisi.reference}`;
+        
+        // On sauvegarde la catégorie dans la mémoire globale pour que le bouton "Relancer" la connaisse
+        categorieActuelle = categorie;
+        
+        // On remet le texte du bouton copier à zéro (utile si on relance juste après avoir copié)
+        boutonCopier.textContent = "Copier";
+        
+        fenetreModal.className = 'modal-visible';
+    }
+}
+
+// L'ordre pour les boutons du menu principal
 tousLesBoutons.forEach(bouton => {
-
-    // On "écoute" le clic
     bouton.addEventListener('click', () => {
+        const categorieCible = bouton.getAttribute('data-category');
+        // On appelle notre super-fonction
+        afficherUnVerset(categorieCible);
+    });
+});
 
-        // On regarde quelle émotion est écrite dans le 'data-category' du HTML
-        const categorie = bouton.getAttribute('data-category');
+// --- NOUVEAU : L'ordre pour le bouton Relancer ---
+boutonRelancer.addEventListener('click', () => {
+    // Il utilise la même fonction, mais avec la catégorie mémorisée !
+    afficherUnVerset(categorieActuelle);
+});
 
-        // On vérifie si cette catégorie existe bien dans notre JSON
-        if (baseDeDonnees[categorie]) {
+// L'ordre pour la croix
+boutonFermer.addEventListener('click', () => {
+    fenetreModal.className = 'modal-cachee';
+});
 
-            // On récupère la liste des versets de cette catégorie (Amour ou Peur)
-            const listeVersets = baseDeDonnees[categorie];
-
-            // On tire un chiffre au hasard entre 0 et la taille de la liste
-            const indexAleatoire = Math.floor(Math.random() * listeVersets.length);
-
-            // On pioche le verset qui correspond à ce chiffre
-            const versetChoisi = listeVersets[indexAleatoire];
-
-            // On affiche le résultat discrètement dans la console
-            console.log(`Tu as cliqué sur ${categorie} :`, versetChoisi);
-        }
+// L'ordre pour le bouton Copier
+boutonCopier.addEventListener('click', () => {
+    const texteACopier = `${affichageTexte.textContent} ${affichageReference.textContent}`;
+    
+    navigator.clipboard.writeText(texteACopier).then(() => {
+        boutonCopier.textContent = "Copié !";
     });
 });

@@ -5,8 +5,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Rhema</title>
+    <link rel="stylesheet" href="css/main.css">
     <script src="js/script.js" defer></script>
-</head> 
+</head>
 
 <body>
 
@@ -26,6 +27,20 @@
         </div>
 
     </main>
+
+    <div id="fenetreModal" class="modal-cachee">
+        <div class="modal-contenu">
+            <span id="btnFermerCroix" class="fermer-croix">&times;</span>
+
+            <p id="texteVerset">Le verset apparaîtra ici</p>
+            <p id="referenceVerset">La référence ici</p>
+
+            <div class="modal-actions">
+                <button id="btnCopier" class="btn-copier">Copier</button>
+                <button id="btnRelancer" class="btn-action">Un autre !</button>
+            </div>
+        </div>
+    </div>
 
 
 </body>
